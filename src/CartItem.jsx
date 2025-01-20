@@ -3,9 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
-const CartItem = ({ onContinueShopping }) => {
+const CartItem = ({ onContinueShopping, onItemRemoved }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
+
+  const handleRemove = (item) => {
+    dispatch(removeItem(item.name));
+    onItemRemoved(item.name);
+  };
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
@@ -40,10 +45,12 @@ const CartItem = ({ onContinueShopping }) => {
     } else {
       dispatch(removeItem(item.name)); // Remove item if quantity is 1
     }
+
+    
   };
 
-  const handleRemove = (item) => {
-    dispatch(removeItem(item.name));
+  const handleCheckoutShopping = (e) => {
+    alert('This feature is now unavailable');
   };
 
   return (
@@ -71,7 +78,7 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={(e) => handleCheckoutShopping(e)}>Checkout</button>
       </div>
     </div>
   );

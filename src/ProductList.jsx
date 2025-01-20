@@ -257,10 +257,16 @@ const handlePlantsClick = (e) => {
     setShowCart(false); // Hide the cart when navigating to About Us
 };
 
-   const handleContinueShopping = (e) => {
-    e.preventDefault();
+   const handleContinueShopping = () => {
     setShowCart(false);
   };
+
+  const handleItemRemoved = (itemName) => {
+    setAddedToCart((prevState) => ({
+      ...prevState,
+      [itemName]: false,}));
+};
+
     return (
         <div>
              <div className="navbar" style={styleObj}>
@@ -293,7 +299,7 @@ const handlePlantsClick = (e) => {
                             <div className="product-title">{plant.name}</div>
                             <div className='product-description'>{plant.description}</div>
                             <div className='product-cost'> {plant.cost}</div>
-                <button onClick={() => handleAddToCart(plant)}
+                <button className="product-button" onClick={() => handleAddToCart(plant)}
                       disabled={!!addedToCart[plant.name]}>
                 {addedToCart[plant.name] ? "Added" : "Add to Cart"}
                 </button>
@@ -305,7 +311,10 @@ const handlePlantsClick = (e) => {
 
         </div>
  ) :  (
-    <CartItem onContinueShopping={handleContinueShopping}/>
+    <CartItem 
+    onContinueShopping={handleContinueShopping}
+    onItemRemoved={handleItemRemoved}
+    />
 )}
     </div>
     );
